@@ -13,10 +13,10 @@ import { Observable } from 'rxjs';
 export class UserServiceClient implements OnModuleInit {
   private userService: UserService;
 
-  constructor(@Inject('User') private client: ClientGrpc) {}
+  constructor(@Inject('User') private UserClient: ClientGrpc) {}
 
   onModuleInit() {
-    this.userService = this.client.getService<UserService>('UserService');
+    this.userService = this.UserClient.getService<UserService>('UserService');
   }
 
   getUserProfile(request: UserRequest): Observable<UserResponse> {

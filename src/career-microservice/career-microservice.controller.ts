@@ -18,7 +18,7 @@ export class CareerMicroserviceController {
     return this.SubjectServiceClient.GetAllSubjects();
   }
 
-  @Get('career')
+  @Get()
   getCareers() {
     return this.CareerServiceClient.GetAllCareers();
   }
