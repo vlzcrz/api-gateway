@@ -3,10 +3,18 @@ import { UserServiceClient } from './Services/User/user.service';
 import { UserRequestDTO } from './DTOs/UserRequest.dto';
 import { UpdateProfileRequestDTO } from './DTOs/UpdateProfileRequest.dto';
 import { JwtToken } from 'src/decorators/jwtToken.decorator';
+import {
+  ProgressRequest,
+  UpdateProgressRequest,
+} from './Services/Progress/progress.methds.interface';
+import { ProgressServiceClient } from './Services/Progress/progress.service';
 
 @Controller('user')
 export class UserMicroserviceController {
-  constructor(private readonly UserServiceClient: UserServiceClient) {}
+  constructor(
+    private readonly UserServiceClient: UserServiceClient,
+    private readonly ProgressServiceClient: ProgressServiceClient,
+  ) {}
 
   @Get()
   getUser(@Body() UserRequest: UserRequestDTO) {
@@ -19,12 +27,12 @@ export class UserMicroserviceController {
   }
 
   @Get('my-progress')
-  getMyProgress(@JwtToken() JwtToken) {
-    return { message: `get my-progress task done ${JwtToken}` };
+  getMyProgress(@Body() ProgressRequest: ProgressRequest) {
+    return this.ProgressServiceClient.GetUserProgress(ProgressRequest);
   }
 
-  @Patch('my-progress')
-  patchMyProgress(@JwtToken() JwtToken) {
-    return { message: `patch my-progress task done ${JwtToken}` };
+  @Put('my-progress')
+  patchMyProgress(@Body() UpdateProgressRequest: UpdateProgressRequest) {
+    return this.ProgressServiceClient.UpdateUserProgress(UpdateProgressRequest);
   }
 }
